@@ -61,7 +61,7 @@
 请在您的Package.swift 文件中增加如下依存关系：
 
 ``` swift
-.Package(url:"https://github.com/PerfectSideRepos/Perfect-RegEx.git", majorVersion: 1, minor: 0)
+.Package(url:"https://github.com/PerfectSideRepos/Perfect-RegEx.git", majorVersion: 1)
 ```
 
 然后在源代码开头部分引用函数库：
