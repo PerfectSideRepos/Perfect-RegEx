@@ -32,10 +32,18 @@ class RegexTests: XCTestCase {
 	XCTAssertEqual(outcome[2].2, "416-970-8888")
     }
 
+  func testSlack() {
+    let source = "send you <@U4MNSLWMD>  :cookie: <@hello> <@myboy123>"
+    let u = source.matches(pattern: "\\<\\@[0-9a-zA-Z]*\\>")
+      .map { String($0.extraction.characters.dropLast().dropFirst(2)) }
+    print(u)
+    XCTAssertEqual(u.count, 3)
+  }
 
     static var allTests : [(String, (RegexTests) -> () throws -> Void)] {
         return [
             ("testExample", testExample),
+            ("testSlack", testSlack)
         ]
     }
 }
