@@ -34,7 +34,7 @@ class RegexTests: XCTestCase {
 
   func testSlack() {
     let source = "send you <@U4MNSLWMD>  :cookie: <@hello> <@myboy123>"
-    let u = source.matches(pattern: "\\<\\@[0-9a-zA-Z]*\\>")
+    let u = source.matches(pattern: "<@[^>]+>")
     print(u)
     XCTAssertEqual(u.count, 3)
   }
