@@ -78,7 +78,7 @@ extension String {
 
         // save the result into the duplicated string
         memset(copy!, 0, Int(sz))
-        memcpy(copy!, cursor!.advanced(by: Int(p.rm_so)), p.rm_eo - p.rm_so)
+        memcpy(copy!, cursor!.advanced(by: Int(p.rm_so)), Int(p.rm_eo) - Int(p.rm_so))
 
         // turn the pointer into string
         let extraction = String(cString: copy!)
