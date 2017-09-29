@@ -1,3 +1,6 @@
+// swift-tools-version:4.0
+// The swift-tools-version declares the minimum version of Swift required to build this package.
+
 //
 //  Package.swift
 //  Perfect-RegEx
@@ -20,5 +23,20 @@
 import PackageDescription
 
 let package = Package(
-    name: "Regex"
+    name: "Regex",
+    products: [
+        .library(
+            name: "Regex",
+            targets: ["Regex"]),
+    ],
+    dependencies: [
+    ],
+    targets: [
+        .target(
+            name: "Regex",
+            dependencies: []),
+        .testTarget(
+            name: "RegexTests",
+            dependencies: ["Regex"]),
+    ]
 )
