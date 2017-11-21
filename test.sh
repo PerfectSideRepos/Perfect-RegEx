@@ -1,13 +1,14 @@
+SRCPACK=/tmp/pr.tgz
+tar czf $SRCPACK Sources Tests Package.swift
+REPO=/tmp/reg.linux
+mkdir -p $REPO
+pushd .
+echo "-------------- LINUX SWIFT 4.0 ----------------"
+cd $REPO
+tar xzf $SRCPACK
+docker pull rockywei/swift:4.0
+docker run -it -v $REPO:/home -w /home rockywei/swift:4.0 /bin/bash -c "swift build -c release && swift test"
 echo "-------------- OS X / Xcode ----------------"
-rm -rf .build
-rm -rf Package.pins
-rm -rf Package.resolved
-swift build
+popd
 swift build -c release
 swift test
-echo "-------------- LINUX SWIFT 4.0 ----------------"
-rm -rf .build_linux
-rm -rf Package.resolved
-docker pull rockywei/swift:4.0
-docker run -it -v $PWD:/home rockywei/swift:4.0 /bin/bash -c "cd /home;swift build --build-path=.build_linux; swift build -c release --build-path=.build_linux;swift test --build-path=.build_linux"
-

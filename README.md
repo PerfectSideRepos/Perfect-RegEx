@@ -52,7 +52,10 @@ Ensure you have installed and activated the latest Swift 4.0 tool chain.
 Add this project as a dependency in your Package.swift file.
 
 ``` swift
-.Package(url:"https://github.com/PerfectSideRepos/Perfect-RegEx.git", majorVersion: 3)
+.package(url:"https://github.com/PerfectSideRepos/Perfect-RegEx.git", from: "3.1.0")
+
+... 
+dependencies: ["RegEx"]
 ```
 
 Then please add the following line to the beginning part of swift sources:
@@ -62,33 +65,40 @@ import Regex
 
 ## Quick Start
 
-The following demo shows how to extract substrings with a pattern, for example, phone numbers:
+The following demo shows how to extract substring ranges with a pattern:
 
 ``` swift
-let text = "this is a long test. The correct number is 123-456-7890 or 647-237-8888 but please don't deal because it's not my number. 我的电话我可不告诉你是 416-970-8888 🇨🇳 🇨🇦 "
+var source = "there is a bloody bad bread on my bed."
 
-let found = text.matches()
-print(found)
+let ranges = source.match(pattern: "b[a-z]+d")
+// it will figure out the range of `blood`, `bad` `bread` and `bed`
+
+// you can do further operations, such as remove:
+source.removeSubrange(ranges[0])
+
+print(source)
+// the result should be:
+// there is a y bad bread on my bed.
 ```
 
 ## API Info
 
-There is only one function in this library, called `matches()`:
 
 ``` swift
 extension String {
-  public func matches(pattern: String = "[0-9]{3}-[0-9]{3}-[0-9]{4}", limitation: Int = 32)
-    -> [(rangeBegin: Int, rangeEnd: Int, extraction: String)]
+	/// test if the string contains certain pattern
+ 	/// - parameters:
+ 	///   - pattern: string to recognize
+ 	/// - return: true for found
+  public func contains(pattern: String) -> Bool
+
+  /// find string ranges
+  /// - parameters:
+  ///   - pattern: string to recognize
+  /// - return: a string range array
+  public func match(pattern: String) -> [Range<String.Index>]
 }
 ```
-
-### Parameters:
-- pattern: String, the regular expression; default value is a typical phone number, like 123-456-7890
-- limitation: Int, the maximum number of matches allowed to find; default is 32, which means the first 32 needles would be found and save from the stack
-
-### Returns:
-
-`[(rangeBegin: Int, rangeEnd: Int, extraction: String)]` - a tuple array, each element is the range begin / end mark, with the extraction value; if nothing found or error happened, the result set will be empty.
 
 ## Issues
 

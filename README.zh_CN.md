@@ -56,8 +56,10 @@
 请在您的Package.swift 文件中增加如下依存关系：
 
 ``` swift
+.package(url:"https://github.com/PerfectSideRepos/Perfect-RegEx.git", from: "3.1.0")
 
-.Package(url:"https://github.com/PerfectSideRepos/Perfect-RegEx.git", majorVersion: 3)
+... 
+dependencies: ["RegEx"]
 
 ```
 
@@ -71,33 +73,39 @@ import Regex
 
 ## 快速上手
 
-以下示范代码展示了如何从字符串内提取电话号码：
+以下示范代码展示了如何从字符串内寻找特定模式的内容，并删除：
 
 ``` swift
-let text = "this is a long test. The correct number is 123-456-7890 or 647-237-8888 but please don't deal because it's not my number. 我的电话我可不告诉你是 416-970-8888 🇨🇳 🇨🇦 "
+var source = "there is a bloody bad bread on my bed."
 
-let found = text.matches()
-print(found)
+let ranges = source.match(pattern: "b[a-z]+d")
+// 返回结果将会找到`blood`, `bad` `bread` and `bed`
+
+// 同时进一步操作，比如删除选项
+source.removeSubrange(ranges[0])
+
+print(source)
+// 结果字符串变成了
+// there is a y bad bread on my bed.
 ```
 
 ## API 参考
 
-本函数库内只有一个函数，名为`matches()`:
-
 ``` swift
 extension String {
-  public func matches(pattern: String = "[0-9]{3}-[0-9]{3}-[0-9]{4}", limitation: Int = 32)
-    -> [(rangeBegin: Int, rangeEnd: Int, extraction: String)]
+ /// 检查字符串是否包含某种模式
+  /// - 参数:
+  ///   - pattern: 待识别内容
+  /// - 返回值: 如果找到返回真值
+  public func contains(pattern: String) -> Bool
+
+  /// 找到所有符合条件的字串范围信息
+  /// - 参数:
+  ///   - pattern: 待识别内容
+  /// - 返回值: 范围信息数组
+  public func match(pattern: String) -> [Range<String.Index>]
 }
 ```
-
-### 参数:
-- pattern: String, 正则表达式，默认为一个电话号码，比如 123-456-7890
-- limitation: Int, 允许检索的最大结果数量限制。默认为32，意味着只有前32个结果能够返回
-
-### 返回值：
-
-`[(rangeBegin: Int, rangeEnd: Int, extraction: String)]` - 一个元组数组，每个元素分别有三个单元，依次为检索结果的起点为止、终点位置，以及随后提取的匹配字符串。如果没找到或者出错，返回值为空数组。
 
 ### 问题报告、内容贡献和客户支持
 
