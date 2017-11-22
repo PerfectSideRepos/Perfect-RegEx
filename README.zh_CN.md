@@ -80,7 +80,9 @@ var source = "there is a bloody bad bread on my bed."
 
 let ranges = source.match(pattern: "b[a-z]+d")
 // 返回结果将会找到`blood`, `bad` `bread` and `bed`
-
+let found:[String] = ranges.map { String(source[$0]) }
+print("符合模式的字符串：", found)
+    
 // 同时进一步操作，比如删除选项
 source.removeSubrange(ranges[0])
 

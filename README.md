@@ -71,7 +71,11 @@ The following demo shows how to extract substring ranges with a pattern:
 var source = "there is a bloody bad bread on my bed."
 
 let ranges = source.match(pattern: "b[a-z]+d")
+
 // it will figure out the range of `blood`, `bad` `bread` and `bed`
+let found:[String] = ranges.map { String(source[$0]) }
+print("found", found)
+
 
 // you can do further operations, such as remove:
 source.removeSubrange(ranges[0])
