@@ -19,15 +19,29 @@
 
 import XCTest
 @testable import Regex
-
+import Foundation
 class RegexTests: XCTestCase {
 
   static var allTests : [(String, (RegexTests) -> () throws -> Void)] {
     return [
       ("testRanges", testRanges),
       ("testSlack", testSlack),
-      ("testExample", testExample)
+      ("testExample", testExample),
+      ("testReplacement", testReplacement)
     ]
+  }
+
+  func testReplacement() {
+    let source = "love you, love me, love the little baby, yes!"
+    do {
+      let pattern = try NSRegularExpression(pattern: "love\\s([a-z\\s]+),", options: .allowCommentsAndWhitespace)
+      let range = NSRange(location: 0, length: source.count)
+      let modified = pattern.stringByReplacingMatches(in: source, options: .withTransparentBounds, range: range, withTemplate: "hate $1;")
+      print("love:", modified)
+    }catch {
+      XCTFail("\(error)")
+    }
+
   }
 
   func testRanges() {
