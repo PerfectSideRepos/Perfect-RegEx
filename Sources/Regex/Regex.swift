@@ -85,8 +85,9 @@ public class RegEx {
         }//end guard
 
         // append outcomes to return set
-        let start = String.Index.init(encodedOffset: Int(p.rm_so))
-        let end = String.Index.init(encodedOffset: Int(p.rm_eo))
+        let offset = me.distance(to: cursor)
+        let start = String.Index(encodedOffset: Int(p.rm_so) + offset)
+        let end = String.Index(encodedOffset: Int(p.rm_eo) + offset)
         found.append(start ..< end)
       }//next i
 
@@ -180,7 +181,8 @@ extension String {
         let extraction = String(cString: copy!)
 
         // append outcomes to return set
-        found.append((Int(p.rm_so), Int(p.rm_eo), extraction))
+        let offset = me?.distance(to: cursor!)
+        found.append((Int(p.rm_so) + offset!, Int(p.rm_eo) + offset!, extraction))
       }//next i
 
       cursor = cursor!.advanced(by: Int(m.pointee.rm_eo))

@@ -36,6 +36,9 @@ class RegexTests: XCTestCase {
     let ranges = source.match(pattern: "b[a-z]+d")
     XCTAssertEqual(ranges.count, 4)
     print("ranges", ranges)
+    let found:[String] = ranges.map { String(source[$0]) }
+    print("found", found)
+    XCTAssertEqual(found, ["blood", "bad", "bread", "bed"])
     source.removeSubrange(ranges[0])
     print("remove bloody", source)
   }
