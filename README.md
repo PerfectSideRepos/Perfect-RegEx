@@ -55,7 +55,7 @@ Add this project as a dependency in your Package.swift file.
 .package(url:"https://github.com/PerfectSideRepos/Perfect-RegEx.git", from: "3.1.0")
 
 ... 
-dependencies: ["RegEx"]
+dependencies: ["Regex"]
 ```
 
 Then please add the following line to the beginning part of swift sources:
