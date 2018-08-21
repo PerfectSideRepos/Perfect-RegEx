@@ -68,7 +68,7 @@ public class RegEx {
     // allocate a buffer for the outcomes
     let m = UnsafeMutablePointer<regmatch_t>.allocate(capacity: limitation)
     defer {
-      m.deallocate(capacity: limitation)
+      m.deallocate()
       free(me)
     }
 
