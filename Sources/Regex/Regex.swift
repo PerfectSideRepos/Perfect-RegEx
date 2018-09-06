@@ -68,7 +68,11 @@ public class RegEx {
 		// allocate a buffer for the outcomes
 		let m = UnsafeMutablePointer<regmatch_t>.allocate(capacity: limitation)
 		defer {
+#if swift(>=4.1)
+			m.deallocate()
+#else
 			m.deallocate(capacity: limitation)
+#endif
 			free(me)
 		}
 		
