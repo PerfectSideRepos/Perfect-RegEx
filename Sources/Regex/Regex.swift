@@ -200,7 +200,11 @@ extension String {
 		// release resources before checking outcomes
 		regfree(&reg)
 		// release the pointer buffer
+	#if swift(>=4.1)
+		m.deallocate()
+	#else
 		m.deallocate(capacity: limitation)
+	#endif
 		return found
 	}//end func
 }//end extension
